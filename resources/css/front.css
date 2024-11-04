@@ -1,0 +1,5 @@
+/* Import Library Bootstrap dari node_modules */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+/* Kalau ini import AOS (Animate On Scroll) dari node_modules juga */
+@import 'aos/dist/aos.css';

@@ -4,7 +4,7 @@
 
             <a wire:navigate href="{{ route('administrator.dashboard') }}" class="-mx-2 h-12 flex justify-center"
                 :class="!isOpen ? 'w-16 transition-all duration-300' : 'w-48 transition-all duration-300'">
-                <img src="{{ asset('assets/img/logo-madrid.png') }}" class="h-12 object-contain" alt="">
+                <img :src="!isOpen ? '{{ asset('assets/img/logo-kecil.png') }}' : '{{ asset('assets/img/logo.png') }}'" class="h-10 object-contain" alt="">
             </a>
 
             <ul class="mt-5 space-y-1">

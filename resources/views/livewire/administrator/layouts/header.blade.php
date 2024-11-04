@@ -26,7 +26,10 @@
                         <span class="ml-auto text-sm font-semibold  text-slate-600">
                             {{ Auth::user()->roles->first()->name }}
                         </span>
-                        <div x-show="open" @click.away="open = false">
+                        <div x-data="{ open: false }" x-show="open">
+                            <div class="fixed right-1"></div>
+                        </div>
+                        {{-- <div x-show="open" @click.away="open = false">
                             <div class="absolute p-3 bg-white mt-6 rounded-md flex-col text-sm shadow-md">
                                 <div class="rounded-t px-4 py-3 flex gap-2 items-center hover:bg-gray-200 transition-all active:bg-gray-400">
                                     <a href="{{ route('administrator.profile') }}" >
@@ -52,7 +55,7 @@
                                     </span>
                                 </div>  
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>    
             </div>
