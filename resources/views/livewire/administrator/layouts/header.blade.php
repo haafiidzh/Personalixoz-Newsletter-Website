@@ -12,54 +12,54 @@
                     <a href="#"><i class="text-2xl fa-regular fa-bell px-4 "></i></a>
                 </div>
                 <div class="pr-7 pl-4 my-3 flex border-l-2">
-                    <div class="flex items-center">
-                        <div
-                            class="w-12 h-12 mr-1 text-3xl font-medium flex items-center justify-center rounded-full shadow-sm bg-gray-300">
-                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}{{ count(explode(' ', Auth::user()->name)) > 1 ? strtoupper(substr(last(explode(' ', Auth::user()->name)), 0, 1)) : '' }}
-                        </div>
-                    </div>
-                    <div @click="open = !open"
-                        class="relative cursor-pointer px-3 py-2 flex flex-col rounded-xl hover:bg-gray-200 hover:shadow-md transition-all duration-200 hover:scale-100">
-                        <div class="text-md text-center border-b-2 font-semibold text-slate-800 border-gray-700">
+                    <div class="relative px-3 py-2 flex flex-col w-28">
+                        <div class="text-md text-center border-b-[1px] font-semibold text-slate-800 border-gray-700">
                             {{ Auth::user()->name }}
                         </div>
-                        <span class="ml-auto text-sm font-semibold  text-slate-600">
+                        <span class="text-center text-sm  text-slate-600">
                             {{ Auth::user()->roles->first()->name }}
                         </span>
-                        <div x-data="{ open: false }" x-show="open">
-                            <div class="fixed right-1"></div>
-                        </div>
-                        {{-- <div x-show="open" @click.away="open = false">
-                            <div class="absolute p-3 bg-white mt-6 rounded-md flex-col text-sm shadow-md">
-                                <div class="rounded-t px-4 py-3 flex gap-2 items-center hover:bg-gray-200 transition-all active:bg-gray-400">
-                                    <a href="{{ route('administrator.profile') }}" >
+                        <div x-show="open" @click.away="open = false">
+
+                            <div class="absolute mt-6 -ml-10 w-40 rounded-md flex-col text-sm bg-white shadow-md">
+                                <a href="{{ route('administrator.profile') }}">
+                                    <div
+                                        class="px-4 py-3 flex gap-2 rounded items-center hover:bg-slate-200 transition-all active:bg-gray-400">
                                         <i class="fa-solid fa-user"></i>
                                         <span>
                                             Profile
                                         </span>
-                                    </a>
-                                </div>
-                                
-                                <hr>
-                                <div class="px-4 py-3 flex gap-2 items-center hover:bg-gray-200 transition-all active:bg-gray-400">
+
+                                    </div>
+                                </a>
+                                <a href="#">
+                                <div
+                                    class="px-4 py-3 flex gap-2 rounded items-center hover:bg-gray-200 transition-all active:bg-gray-400">
                                     <i class="fa-solid fa-gear"></i>
                                     <span>
                                         Setting
                                     </span>
                                 </div>
-                                <hr>
-                                <div onclick="confirmLogout()" class="px-4 py-3 flex gap-2 items-center hover:bg-gray-200 transition-all active:bg-gray-400">
+                            </a>
+                                <div onclick="confirmLogout()"
+                                    class="px-4 py-3 flex gap-2 rounded cursor-pointer items-center hover:bg-gray-200 transition-all active:bg-gray-400">
                                     <i class="fa-solid fa-right-from-bracket"></i>
                                     <span>
                                         Log Out
                                     </span>
-                                </div>  
+                                </div>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
-                </div>    
+                    <div @click="open = !open" class="flex items-center">
+                        <div
+                            class="w-12 h-12 mr-1 text-3xl font-medium flex items-center justify-center rounded-full shadow-sm bg-gray-300 cursor-pointer">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}{{ count(explode(' ', Auth::user()->name)) > 1 ? strtoupper(substr(last(explode(' ', Auth::user()->name)), 0, 1)) : '' }}
+                        </div>
+                    </div>
+                </div>
             </div>
-            
+
 
         </div>
     </div>

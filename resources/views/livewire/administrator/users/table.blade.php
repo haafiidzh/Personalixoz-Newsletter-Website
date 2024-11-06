@@ -39,6 +39,7 @@
                                 {{-- cara lain ambil role --}}
                                 {{-- <td class="px-4 py-2 text-left">{{ $user->getRoleNames()->implode('') }}</td> --}}
                                 {{-- <td class="px-4 py-2 text-left">{{ $user->roles->pluck('name')->first() }}</td> --}}
+                                
                                 <td class="px-4 py-2 text-left">{{ $user->roles->first()->name }}</td>
                                 <td class="px-4 py-2 text-left">
                                     @if ($user->email_verified_at == !null)

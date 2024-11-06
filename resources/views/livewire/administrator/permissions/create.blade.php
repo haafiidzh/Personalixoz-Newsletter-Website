@@ -42,8 +42,15 @@
             {{-- Button Simpan --}}
             <div class="pb-14 w-1/2 flex justify-center mx-auto">
                 <button type="submit"
-                    class="w-1/2 px-6 py-3 rounded-lg border-2 text-lg font-medium text-slate-700 border-black hover:text-black hover:border-transparent hover:bg-white hover:shadow-md active:bg-slate-300 transition-all">Simpan
-                    <i class="text-xs fa-solid fa-arrow-right"></i></button>
+                    class="w-1/2 px-6 py-3 rounded-lg border-2 text-lg font-medium text-slate-700 border-black hover:text-black hover:border-transparent hover:bg-white hover:shadow-md active:bg-slate-300 transition-all">
+                    <span wire:loading.remove wire:target="store">
+                        Simpan <i class="text-xs fa-solid fa-arrow-right"></i>
+                    </span>
+                
+                    <span wire:loading wire:target="store">
+                        Loading <i class="fa-solid fa-circle-notch fa-spin"></i> 
+                    </span>
+                </button>
             </div>
 
         </div>

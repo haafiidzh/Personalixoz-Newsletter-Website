@@ -68,8 +68,8 @@
                     <div class="mb-5">
                         <label for="content" class="block ml-1 font-semibold text-sm text-slate-700 ">Konten</label>
 
-                        <div class="static" wire:ignore>
-                            <textarea id="editor" wire:model.defer="content" cols="30" rows="10" class="static" placeholder="Masukkan isi berita di sini">
+                        <div class="relative" wire:ignore>
+                            <textarea id="editor" wire:model.defer="content" cols="30" rows="10" class="absolute" placeholder="Masukkan isi berita di sini">
                             </textarea>
                         </div>
                         @error('content')
@@ -186,9 +186,9 @@
                     <span wire:loading.remove wire:target="store">
                         Simpan <i class="text-xs fa-solid fa-arrow-right"></i>
                     </span>
-                
+
                     <span wire:loading wire:target="store">
-                        Loading <i class="fa-solid fa-circle-notch fa-spin"></i> 
+                        Loading <i class="fa-solid fa-circle-notch fa-spin"></i>
                     </span>
             </div>
 
@@ -218,10 +218,13 @@
 
         ClassicEditor
             .create(document.querySelector('#editor'), {
-                plugins: [Essentials, Heading, Indent, IndentBlock, Bold, Italic, Underline, Font, Paragraph, Alignment, BlockQuote],
+                plugins: [Essentials, Heading, Indent, IndentBlock, Bold, Italic, Underline, Font, Paragraph, Alignment,
+                    BlockQuote
+                ],
                 toolbar: [
-                    'undo', 'redo', '|', 'heading', '|', 'outdent', 'indent', '|', 'bold', 'italic', 'underline', '|','alignment','|',
-                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor','|', 'blockQuote'
+                    'undo', 'redo', '|', 'heading', '|', 'outdent', 'indent', '|', 'bold', 'italic', 'underline',
+                    '|', 'alignment', '|',
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|', 'blockQuote'
                 ],
                 indentBlock: {
                     offset: 2,

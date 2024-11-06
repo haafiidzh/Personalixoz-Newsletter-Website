@@ -10,6 +10,8 @@ export default defineConfig({
                 "resources/js/app.js",
                 "resources/css/front.css",
                 "resources/js/front.js",
+                "resources/css/main.css",
+                "resources/js/main.js",
             ],
             refresh: true,
         }),

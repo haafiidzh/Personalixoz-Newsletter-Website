@@ -2,6 +2,8 @@
 
 @section('title')
     Edit Berita
+@endsection
+
 @section('content')
     <x-breadcrumb :items="[
         ['title' => 'News', 'route' => 'administrator.news'],

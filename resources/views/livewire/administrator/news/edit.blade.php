@@ -66,17 +66,9 @@
                     </div>
                     <div class="mb-5">
                         <label for="content" class="block ml-1 font-semibold text-sm text-slate-700 ">Konten</label>
-                        <textarea id="editor" wire:model.defer="content" cols="30" rows="10" class="absolute overflow-hidden">
-                            {{-- {{ $news->content }} --}}
+                        <textarea id="editor" wire:model.defer="content" rows="10" class=" overflow-hidden">
+                            {{ $news->content }}
                         </textarea>
-                        {{-- <textarea
-                            class=" w-full mt-2 px-3 py-3 border border-black text-sm rounded-xl placeholder:text-slate-400 placeholder:tracking-[0.075rem]"
-                            id="editor" name="content" placeholder="Masukkan isi berita di sini" wire:model="content">
-                        </textarea> --}}
-                        {{-- <div wire:ignore>
-                            <textarea name="" id="editor" wire:model.defer={{!! "content" !!}} cols="30" rows="10">
-                            </textarea> --}}
-                        </div>
                         @error('content')
                             <div class="mx-1 mt-2 font-semibold text-sm text-red-700">{{ $message }}</div>
                         @enderror
@@ -107,7 +99,8 @@
                         <input
                             class="w-full mt-2 px-3 py-3 border border-black text-sm rounded-xl placeholder:text-black"
                             type="file" name="image" wire:model="image">
-                            <img src="{{ Storage::url($image) }}" alt="{{ $image }}" class="w-20 h-20 object-contain">
+                        <img src="{{ Storage::url($image) }}" alt="{{ $image }}"
+                            class="w-20 h-20 object-contain">
                         @error('image')
                             <div class="mx-1 mt-2 font-semibold text-sm text-red-700">{{ $message }}</div>
                         @enderror
@@ -134,9 +127,7 @@
                     <div class="mb-2 flex flex-col flex-grow">
                         <label for="author_id" class="block ml-1 font-semibold text-sm text-slate-700 ">Penulis</label>
                         <input class=" mt-2 px-3 py-3 border border-black text-sm rounded-xl placeholder:text-black"
-                            type="text" name="author_id" 
-                            {{-- placeholder="{{ Auth::user()->name }}" --}}
-                            wire:model="author_id" readonly>
+                            type="text" name="author_id" {{-- placeholder="{{ Auth::user()->name }}" --}} wire:model="author_id" readonly>
                         @error('author_id')
                             <div class="mx-1 mt-2 font-semibold text-sm text-red-700">{{ $message }}</div>
                         @enderror
@@ -169,10 +160,17 @@
             </div>
 
             {{-- Button Simpan --}}
-            <div class="pb-10 w-3/4 flex justify-center">
+            <div class="pb-14 w-1/2 flex justify-center mx-auto">
                 <button type="submit"
-                    class="w-1/3 px-6 py-3 rounded-lg border-2 text-lg font-medium text-slate-700 border-black hover:text-black hover:border-transparent hover:bg-white hover:shadow-md active:bg-slate-300 transition-all">Simpan
-                    <i class="text-xs fa-solid fa-arrow-right"></i></button>
+                    class="w-1/2 px-6 py-3 rounded-lg border-2 text-lg font-medium text-slate-700 border-black hover:text-black hover:border-transparent hover:bg-white hover:shadow-md active:bg-slate-300 transition-all">
+                    <span wire:loading.remove wire:target="update">
+                        Simpan <i class="text-xs fa-solid fa-arrow-right"></i>
+                    </span>
+
+                    <span wire:loading wire:target="update">
+                        Loading <i class="fa-solid fa-circle-notch fa-spin"></i>
+                    </span>
+                </button>
             </div>
 
         </div>
@@ -183,6 +181,7 @@
     {{-- Script untuk import ckeditor --}}
     <script src="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.umd.js"></script>
     <script>
+        let editorInstance;
         const {
             ClassicEditor,
             Essentials,
@@ -199,19 +198,33 @@
             .create(document.querySelector('#editor'), {
                 plugins: [Essentials, Bold, Italic, Underline, Font, Paragraph, Alignment, BlockQuote],
                 toolbar: [
-                    'undo', 'redo', '|', 'bold', 'italic', 'underline', '|','alignment','|',
-                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor','|', 'blockQuote'
+                    'undo', 'redo', '|', 'bold', 'italic', 'underline', '|', 'alignment', '|',
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|', 'blockQuote'
                 ],
             })
             .then(editor => {
+                editorInstance = editor; // Simpan instance editor
+
+                // Update Livewire property 'content' ketika data diubah di CKEditor
                 editor.model.document.on('change:data', () => {
                     const data = editor.getData();
-                    @this.set('content', data); // Update Livewire property 'content'
+                    @this.set('content', data);
                 });
+                // editor.model.document.on('change:data', () => {
+                // const data = editor.getData();
+                // Livewire.emit('content', data); // Emit event ke Livewire
+                // });
             })
-            .catch( /* ... */ );
+            .catch(error => {
+                console.error(error);
+            });
 
-        
+        // Update CKEditor jika Livewire mengubah konten
+        Livewire.on('contentUpdated', (newContent) => {
+            if (editorInstance) {
+                editorInstance.setData(newContent); // Set data CKEditor
+            }
+        });
     </script>
     
 @endpush

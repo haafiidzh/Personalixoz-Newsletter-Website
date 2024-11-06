@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 
 class Edit extends Component
 {
+    public $id;
     public $title;
     public $slug;
     public $image;
@@ -17,9 +18,11 @@ class Edit extends Component
     public $author_id;
     public $is_published;
 
+    protected $listeners = ['updateContent'];
+
     public function mount($id)
     {
-        $news = News::find($id);
+        $news = News::find($this->id = $id);
 
         $this->title = $news->title;
         $this->slug = $news->slug;
@@ -35,18 +38,27 @@ class Edit extends Component
         $this->slug = Str::slug($value);
     }
 
+    // public function updatedContent($data)
+    // {
+    //     $this->content = $data; // Update property 'content'
+    // }
+    // public function updatedContent($data)
+    // {
+    //     $this->dispatch('contentUpdated', ['newContent' => $data]);
+    // }
+
     function update()
     {
         // Validasi input
         $this->validate([
             'title' => 'required',
-            'slug' => 'required|unique:news,slug,' . $this->id_berita,
-            'content' => 'required',
-            'image' => 'required|image|max:10024', 
+            'slug' => 'required|unique:news,slug,' . $this->id,
+            // 'content' => 'required',
+            // 'image' => 'required|image|max:10024', 
             'category' => 'required',
         ]);
 
-        $news = News::find($this->id_berita);
+        $news = News::find($this->id);
         
         $news->update([
             'title' => $this->title,
@@ -66,10 +78,11 @@ class Edit extends Component
     public function render()
     {
         $categories = NewsCategory::all();
-
+        $news = News::find($this->id);
         return view('livewire.administrator.news.edit',
         [
-            'categories' => $categories
+            'categories' => $categories,
+            'news' => $news
         ]);
     }
 }

@@ -2,7 +2,7 @@
     <div class="flex flex-col justify-between h-screen bg-slate-200 shadow-xl">
         <div class="px-4 py-6">
 
-            <a wire:navigate href="{{ route('administrator.dashboard') }}" class="-mx-2 h-12 flex justify-center"
+            <a href="{{ route('home') }}" target="_blank" class="-mx-2 p-2 flex justify-center"
                 :class="!isOpen ? 'w-16 transition-all duration-300' : 'w-48 transition-all duration-300'">
                 <img :src="!isOpen ? '{{ asset('assets/img/logo-kecil.png') }}' : '{{ asset('assets/img/logo.png') }}'" class="h-10 object-contain" alt="">
             </a>
@@ -58,12 +58,12 @@
                                             </span>
                                         </summary>
 
-                                        <ul class="mt-1 px-3 py-1 space-y-0.5 bg-slate-300 rounded-md"
-                                            :class="!isOpen ? 'px-0 py-0' : ''">
+                                        <ul class="mt-1 py-1 space-y-0.5 bg-slate-300 rounded-md"
+                                            :class="!isOpen ? 'px-2' : 'px-3'">
                                             @foreach ($item['childs'] as $child)
                                                 <li class="">
                                                     <a wire:navigate href="{{ $child['route'] }}"
-                                                        class="{{ $child['active'] ? 'bg-gray-100 text-gray-700' : 'text-gray-500' }} block rounded-lg px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 hover:transition-all hover:duration-200">
+                                                        class="{{ $child['active'] ? 'bg-gray-100 text-gray-700' : 'text-gray-500' }} block rounded-lg p-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 hover:transition-all hover:duration-200">
                                                         <i class="{{ $child['icon'] }} pr-2"></i>
                                                         <span
                                                             :class="!isOpen ? 'hidden transition-all duration-300' :

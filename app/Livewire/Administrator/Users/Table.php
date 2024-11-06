@@ -14,25 +14,29 @@ class Table extends Component
 
     public function mount()
     {
-        $this->search= '';
+        $this->search = '';
     }
 
     public function updatedSearch()
     {
         $this->resetPage();
     }
-    
+
     public function render()
     {
-        $users = User::when($this->search, function ($query) {
-            $query->where('name', 'like', '%' . $this->search . '%')
-                ->orWhere('email', 'like', '%' . $this->search . '%');
-        })->paginate(10);
+        $users = User::whereDoesntHave('roles', function ($query) {
+            $query->where('name', 'Developer'); // Filter Menyembunyikan user dengan role Developer
+        })
+            ->where('id', '!=', auth()->id()) // Filter Menyembunyikan user yang sedang login
+            ->when($this->search, function ($query) {
+                $query->where(function ($q) {
+                    $q->where('name', 'like', '%' . $this->search . '%')
+                        ->orWhere('email', 'like', '%' . $this->search . '%');
+                });
+            })
+            ->paginate(10);
 
-        return view(
-            'livewire.administrator.users.table',
-            ['users' => $users],
-        );
+        return view('livewire.administrator.users.table', ['users' => $users]);
     }
 
     public function delete($id)
@@ -52,6 +56,6 @@ class Table extends Component
                 'icon' => 'fa-circle-exclamation',
             ]);
             return redirect()->route('administrator.users');
-        }  
+        }
     }
 }

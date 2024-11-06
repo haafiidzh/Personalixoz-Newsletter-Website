@@ -89,7 +89,8 @@ class Edit extends Component
 
     public function render()
     {
-        $roles = Role::all();
+        // Hanya ambil role selain Developer
+        $roles = Role::where('name', '!=', 'Developer')->get();
         return view(
             'livewire.administrator.users.edit',
             [
